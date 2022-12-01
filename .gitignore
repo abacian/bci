@@ -1,0 +1,10 @@
+# common
+.idea/
+*.iml
+*.json
+*.log
+*.tmp
+
+# java
+javadoc/
+target/
