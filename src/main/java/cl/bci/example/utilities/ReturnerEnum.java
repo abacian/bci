@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ReturnerEnum {
 
+    NOT_EXIST (23, "Usuario no está registrado"),
     DUPLICATED (22, "Email ya está registrado"),
     EMAIL (11, "Email no cumple con el formato correcto"),
     OK (0, "Operación correcta"),

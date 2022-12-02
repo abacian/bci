@@ -1,6 +1,7 @@
 package cl.bci.example.utilities;
 
 import cl.bci.example.exceptions.EmailException;
+import cl.bci.example.exceptions.NoUserException;
 import cl.bci.example.exceptions.PasswordException;
 import cl.bci.example.models.ResponseDto;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -11,16 +12,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReturnerUtility {
+public class ReturnerUtility
+extends LoggerUtility {
 
-    public ResponseEntity <JsonNode> getBadRequestResponse (Exception exception) {
+    public ResponseEntity <JsonNode> getBadRequestResponse (Exception e) {
 
         var responseDto = new ResponseDto ();
 
         responseDto.add ("code", ReturnerEnum.UNKNOWN.getCode ());
         responseDto.add ("message", ReturnerEnum.UNKNOWN.getMessage ());
 
-        if (exception instanceof EmailException) {
+        if (e instanceof EmailException) {
 
             responseDto = new ResponseDto ();
 
@@ -29,7 +31,7 @@ public class ReturnerUtility {
 
         }
 
-        if (exception instanceof PasswordException) {
+        if (e instanceof PasswordException) {
 
             responseDto = new ResponseDto ();
 
@@ -40,18 +42,22 @@ public class ReturnerUtility {
 
         val jsonNode = JsonUtility.getJsonNode (responseDto);
 
+        assert jsonNode != null;
+
+        logger.error (jsonNode.toString ());
+
         return ResponseEntity.status (HttpStatus.BAD_REQUEST).body (jsonNode);
 
     }
 
-    public ResponseEntity <JsonNode> getInternalErrorResponse (Exception exception) {
+    public ResponseEntity <JsonNode> getInternalErrorResponse (Exception e) {
 
         var responseDto = new ResponseDto ();
 
         responseDto.add ("code", ReturnerEnum.UNKNOWN.getCode ());
         responseDto.add ("message", ReturnerEnum.UNKNOWN.getMessage ());
 
-        if (exception instanceof DataIntegrityViolationException) {
+        if (e instanceof DataIntegrityViolationException) {
 
             responseDto = new ResponseDto ();
 
@@ -60,7 +66,20 @@ public class ReturnerUtility {
 
         }
 
+        if (e instanceof NoUserException) {
+
+            responseDto = new ResponseDto ();
+
+            responseDto.add ("code", ReturnerEnum.NOT_EXIST.getCode ());
+            responseDto.add ("message", ReturnerEnum.NOT_EXIST.getMessage ());
+
+        }
+
         val jsonNode = JsonUtility.getJsonNode (responseDto);
+
+        assert jsonNode != null;
+
+        logger.error (jsonNode.toString ());
 
         return ResponseEntity.status (HttpStatus.INTERNAL_SERVER_ERROR).body (jsonNode);
 
@@ -72,9 +91,14 @@ public class ReturnerUtility {
 
         responseDto.add ("code", ReturnerEnum.OK.getCode ());
         responseDto.add ("message", ReturnerEnum.OK.getMessage ());
-        responseDto.add ("response", response.asText ());
 
-        val jsonNode = JsonUtility.getJsonNode (responseDto);
+        val status = JsonUtility.getJsonNode (responseDto);
+
+        val jsonNode = JsonUtility.mergeNodes (status, response);
+
+        assert jsonNode != null;
+
+        logger.info (jsonNode.toString ());
 
         return ResponseEntity.status (HttpStatus.OK).body (jsonNode);
 

@@ -1,47 +1,31 @@
 package cl.bci.example.controllers;
 
-import cl.bci.example.models.UserDto;
+import cl.bci.example.models.User;
+import cl.bci.example.utilities.LoggerUtility;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import static java.time.LocalDateTime.now;
+
 @RestController
-public class ExampleController {
+public class ExampleController
+extends LoggerUtility {
 
-    Logger logger = LoggerFactory.getLogger (ExampleController.class);
-
-    private ExampleModule exampleModule;
-
-    @GetMapping (path = "/example/get")
-    public ResponseEntity <JsonNode> obtainUser (
-    @RequestBody UserDto userDto
-    ) {
-
-        logger.info (userDto.toString ());
-
-        var jsonNodeResponseEntity = exampleModule.validateObtaining (userDto);
-
-        if (jsonNodeResponseEntity != null) {
-
-            return jsonNodeResponseEntity;
-
-        }
-
-        return exampleModule.executeObtaining (userDto);
-
-    }
+    private ExamplePersistence examplePersistence;
+    private ExampleValidation exampleValidation;
 
     @GetMapping (path = "/example/post")
     public ResponseEntity <JsonNode> createUser (
-    @RequestBody UserDto userDto
+    @RequestBody User user
     ) {
 
-        var jsonNodeResponseEntity = exampleModule.validateCreating (userDto);
+        logger.info (user.toString ());
+
+        var jsonNodeResponseEntity = exampleValidation.createUser (user);
 
         if (jsonNodeResponseEntity != null) {
 
@@ -49,43 +33,66 @@ public class ExampleController {
 
         }
 
-        jsonNodeResponseEntity = exampleModule.executeCreating (userDto);
+        user.setIsActive (true);
+        user.setCreated (now ());
 
-        return jsonNodeResponseEntity;
+        return examplePersistence.createUser (user);
 
     }
 
-/*
-    public ResponseEntity <JsonNode> getUser (
-    @Valid @RequestBody UserDto userDto
+    @GetMapping (path = "/example/get")
+    public ResponseEntity <JsonNode> obtainUser (
+    @RequestBody User user
     ) {
 
-        System.out.println (userDto);
-        //logger.info ("user: " + user);
+        logger.info (user.toString ());
 
-        try {
+        var jsonNodeResponseEntity = exampleValidation.obtainUser (user);
 
-            validatorUtility.validateEmail (userDto.getEmail ());
-            validatorUtility.validatePassword (userDto.getPassword ());
+        if (jsonNodeResponseEntity != null) {
 
-        } catch (EmailException | PasswordException e) {
-
-            //ResponseUtility.getResponse ();
-            System.out.println (e);
+            return jsonNodeResponseEntity;
 
         }
 
-        userRepository.save (userDto);
+        user.setLastLogin (now ());
 
-        return ResponseEntity.status (HttpStatus.OK).body (null);
+        return examplePersistence.obtainUser (user);
 
     }
-*/
+
+    @GetMapping (path = "/example/disable")
+    public ResponseEntity <JsonNode> disableUser (
+    @RequestBody User user
+    ) {
+
+        logger.info (user.toString ());
+
+        var jsonNodeResponseEntity = exampleValidation.disableUser (user);
+
+        if (jsonNodeResponseEntity != null) {
+
+            return jsonNodeResponseEntity;
+
+        }
+
+        user.setModified (now ());
+
+        return examplePersistence.disableUser (user);
+
+    }
 
     @Autowired
-    public void setExampleModule (ExampleModule exampleModule) {
+    public void setExamplePersistence (ExamplePersistence examplePersistence) {
 
-        this.exampleModule = exampleModule;
+        this.examplePersistence = examplePersistence;
+
+    }
+
+    @Autowired
+    public void setExampleValidation (ExampleValidation exampleValidation) {
+
+        this.exampleValidation = exampleValidation;
 
     }
 
