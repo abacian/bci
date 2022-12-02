@@ -1,6 +1,6 @@
 package cl.bci.example.controllers;
 
-import cl.bci.example.entities.UserEntity;
+import cl.bci.example.models.UserDto;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ public class ExampleControllerTester {
     public void getUser ()
     throws Exception {
 
-        UserEntity userEntity = new UserEntity ();
+        UserDto userDto = new UserDto ();
 
         logger.info ("test");
 

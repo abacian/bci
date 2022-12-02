@@ -1,4 +1,4 @@
-package cl.bci.example.entities;
+package cl.bci.example.models;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import javax.persistence.Id;
 @Entity (name = "phones")
 @Getter
 @Setter
-public class PhoneEntity {
+public class PhoneDto {
 
     @Id
     private String id;
