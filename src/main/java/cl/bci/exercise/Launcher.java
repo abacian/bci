@@ -1,17 +1,15 @@
-package cl.bci.example;
+package cl.bci.exercise;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cl.bci.exercise.utilities.LoggerUtility;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication (scanBasePackages = "cl.bci.example")
+@SpringBootApplication (scanBasePackages = "cl.bci.exercise")
 public class Launcher
+extends LoggerUtility
 implements ApplicationRunner {
-
-    Logger logger = LoggerFactory.getLogger (Launcher.class);
 
     public static void main (String... strings) {
 
@@ -22,7 +20,7 @@ implements ApplicationRunner {
     @Override
     public void run (ApplicationArguments applicationArguments) {
 
-        logger.info ("BCI example on ready");
+        logger.info ("BCI Exercise is ready");
 
     }
 

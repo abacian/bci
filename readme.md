@@ -1,5 +1,5 @@
 # run configuration
-1. Main class: cl.bci.example.Launcher
+1. Main class: cl.bci.exercise.Launcher
 
 # api documentation
 1. URL: 127.0.0.1:8080/swagger-ui.html

@@ -1,34 +1,24 @@
-package cl.bci.example.models;
+package cl.bci.exercise.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
-@AllArgsConstructor
 @Data
 @Entity (name = "users")
-@NoArgsConstructor
-@ToString
-public class User {
+public class UserEntity {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Integer id;
-    //private String user_id = UUID.randomUUID ().toString ();
-
+    private String user_id = UUID.randomUUID ().toString ();
     @Column (unique = true)
     private String email;
 
@@ -44,8 +34,8 @@ public class User {
     @JsonFormat (shape = JsonFormat.Shape.STRING)
     private LocalDateTime lastLogin;
 
-    @OneToMany (targetEntity = Phone.class, cascade = CascadeType.ALL)
-    @JoinColumn (name = "up_fk", referencedColumnName = "id")
-    private List <Phone> phones;
+    @OneToMany (targetEntity = PhoneEntity.class, cascade = CascadeType.ALL)
+    @JoinColumn (name = "user_id", referencedColumnName = "user_id")
+    private List <PhoneEntity> phones;
 
 }

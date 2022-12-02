@@ -1,11 +1,11 @@
-package cl.bci.example.controllers;
+package cl.bci.exercise.controllers;
 
-import cl.bci.example.exceptions.NoUserException;
-import cl.bci.example.models.User;
-import cl.bci.example.repositories.UserRepository;
-import cl.bci.example.utilities.JsonUtility;
-import cl.bci.example.utilities.LoggerUtility;
-import cl.bci.example.utilities.ReturnerUtility;
+import cl.bci.exercise.entities.UserEntity;
+import cl.bci.exercise.exceptions.NoUserException;
+import cl.bci.exercise.repositories.UserRepository;
+import cl.bci.exercise.utilities.JsonUtility;
+import cl.bci.exercise.utilities.LoggerUtility;
+import cl.bci.exercise.utilities.ReturnerUtility;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +14,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ExamplePersistence
+public class ServicePersistence
 extends LoggerUtility {
 
     private ReturnerUtility returnerUtility;
     private UserRepository userRepository;
 
-    public ResponseEntity <JsonNode> createUser (User user) {
+    public ResponseEntity <JsonNode> createUser (UserEntity userEntity) {
 
-        logger.info (user.toString ());
+        logger.info (userEntity.toString ());
 
         try {
 
-            userRepository.save (user);
+            userRepository.save (userEntity);
 
-            val responseDto = userRepository.findByEmail (user.getEmail ());
+            val responseDto = userRepository.findByEmail (userEntity.getEmail ());
 
             var jsonNode = JsonUtility.getJsonNode (responseDto);
 
@@ -47,13 +47,13 @@ extends LoggerUtility {
 
     }
 
-    public ResponseEntity <JsonNode> obtainUser (User user) {
+    public ResponseEntity <JsonNode> obtainUser (UserEntity userEntity) {
 
-        logger.info (user.toString ());
+        logger.info (userEntity.toString ());
 
         try {
 
-            var responseDto = userRepository.findByEmail (user.getEmail ());
+            var responseDto = userRepository.findByEmail (userEntity.getEmail ());
 
             if (responseDto == null) {
 
@@ -61,11 +61,11 @@ extends LoggerUtility {
 
             }
 
-            responseDto.setLastLogin (user.getLastLogin ());
+            responseDto.setLastLogin (userEntity.getLastLogin ());
 
             userRepository.save (responseDto);
 
-            responseDto = userRepository.findByEmail (user.getEmail ());
+            responseDto = userRepository.findByEmail (userEntity.getEmail ());
 
             var jsonNode = JsonUtility.getJsonNode (responseDto);
 
@@ -82,13 +82,13 @@ extends LoggerUtility {
 
     }
 
-    public ResponseEntity <JsonNode> disableUser (User user) {
+    public ResponseEntity <JsonNode> disableUser (UserEntity userEntity) {
 
-        logger.info (user.toString ());
+        logger.info (userEntity.toString ());
 
         try {
 
-            var responseDto = userRepository.findByEmail (user.getEmail ());
+            var responseDto = userRepository.findByEmail (userEntity.getEmail ());
 
             if (responseDto == null) {
 
@@ -99,17 +99,17 @@ extends LoggerUtility {
             if (responseDto.getIsActive ()) {
 
                 responseDto.setIsActive (false);
-                responseDto.setModified (user.getModified ());
+                responseDto.setModified (userEntity.getModified ());
 
             } else {
 
                 responseDto.setIsActive (true);
-                responseDto.setModified (user.getModified ());
+                responseDto.setModified (userEntity.getModified ());
 
             }
             userRepository.save (responseDto);
 
-            responseDto = userRepository.findByEmail (user.getEmail ());
+            responseDto = userRepository.findByEmail (userEntity.getEmail ());
 
             var jsonNode = JsonUtility.getJsonNode (responseDto);
 

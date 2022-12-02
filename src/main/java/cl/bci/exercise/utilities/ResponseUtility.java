@@ -1,14 +1,12 @@
-package cl.bci.example.models;
+package cl.bci.exercise.utilities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Getter
-@Setter
-public class ResponseDto {
+@Data
+public class ResponseUtility {
 
     private Map <String, Object> status = new HashMap <> (0);
 

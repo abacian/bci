@@ -1,4 +1,4 @@
-package cl.bci.example.utilities;
+package cl.bci.exercise.utilities;
 
 import lombok.Getter;
 

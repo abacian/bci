@@ -1,6 +1,6 @@
-package cl.bci.example.repositories;
+package cl.bci.exercise.repositories;
 
-import cl.bci.example.models.Usuario;
+import cl.bci.exercise.models.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

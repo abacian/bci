@@ -1,12 +1,12 @@
-package cl.bci.example.utilities;
+package cl.bci.exercise.utilities;
 
-import cl.bci.example.exceptions.EmailException;
-import cl.bci.example.exceptions.PasswordException;
+import cl.bci.exercise.exceptions.EmailException;
+import cl.bci.exercise.exceptions.PasswordException;
+import lombok.val;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
@@ -29,9 +29,9 @@ public class ValidatorUtility {
     public void validatePassword (String password)
     throws PasswordException {
 
-        Pattern pattern = Pattern.compile (this.expression);
+        val pattern = Pattern.compile (this.expression);
 
-        Matcher matcher = pattern.matcher (password);
+        val matcher = pattern.matcher (password);
 
         if (!matcher.matches ()) {
 

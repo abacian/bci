@@ -1,24 +1,20 @@
-package cl.bci.example.models;
+package cl.bci.exercise.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-@AllArgsConstructor
 @Data
 @Entity (name = "phones")
-@NoArgsConstructor
-@ToString
-public class Phone {
+public class PhoneEntity {
 
     @Id
-    private Integer pid;
+    private String phone_id = UUID.randomUUID ().toString ();
+
     private String cityCode;
     private String countryCode;
     private String number;

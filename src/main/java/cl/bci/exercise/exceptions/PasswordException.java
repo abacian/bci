@@ -1,4 +1,4 @@
-package cl.bci.example.exceptions;
+package cl.bci.exercise.exceptions;
 
 public class PasswordException
 extends Exception {

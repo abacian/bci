@@ -1,4 +1,4 @@
-package cl.bci.example.utilities;
+package cl.bci.exercise.utilities;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
