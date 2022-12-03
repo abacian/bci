@@ -24,7 +24,7 @@ public class UserEntity {
 
     private String name;
     private String password;
-    private String token;
+    private String jwtToken;
     private Boolean isActive;
 
     @JsonFormat (shape = JsonFormat.Shape.STRING)

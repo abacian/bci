@@ -4,9 +4,11 @@ import cl.bci.exercise.entities.UserEntity;
 import cl.bci.exercise.utilities.LoggerUtility;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import static java.time.LocalDateTime.now;
@@ -20,7 +22,8 @@ extends LoggerUtility {
 
     @GetMapping (path = "/service/post")
     public ResponseEntity <JsonNode> createUser (
-    @RequestBody UserEntity userEntity
+    @RequestBody UserEntity userEntity,
+    @RequestHeader (HttpHeaders.AUTHORIZATION) String jwtToken
     ) {
 
         logger.info (userEntity.toString ());
@@ -34,6 +37,7 @@ extends LoggerUtility {
         }
 
         userEntity.setIsActive (true);
+        userEntity.setJwtToken (jwtToken.replace ("Bearer ", ""));
         userEntity.setCreated (now ());
 
         return servicePersistence.createUser (userEntity);
@@ -42,7 +46,8 @@ extends LoggerUtility {
 
     @GetMapping (path = "/service/get")
     public ResponseEntity <JsonNode> obtainUser (
-    @RequestBody UserEntity userEntity
+    @RequestBody UserEntity userEntity,
+    @RequestHeader (HttpHeaders.AUTHORIZATION) String jwtToken
     ) {
 
         logger.info (userEntity.toString ());
@@ -55,6 +60,7 @@ extends LoggerUtility {
 
         }
 
+        userEntity.setJwtToken (jwtToken.replace ("Bearer ", ""));
         userEntity.setLastLogin (now ());
 
         return servicePersistence.obtainUser (userEntity);
@@ -63,10 +69,9 @@ extends LoggerUtility {
 
     @GetMapping (path = "/service/disable")
     public ResponseEntity <JsonNode> disableUser (
-    @RequestBody UserEntity userEntity
+    @RequestBody UserEntity userEntity,
+    @RequestHeader (HttpHeaders.AUTHORIZATION) String jwtToken
     ) {
-
-
 
         logger.info (userEntity.toString ());
 
@@ -78,6 +83,7 @@ extends LoggerUtility {
 
         }
 
+        userEntity.setJwtToken (jwtToken.replace ("Bearer ", ""));
         userEntity.setModified (now ());
 
         return servicePersistence.disableUser (userEntity);
