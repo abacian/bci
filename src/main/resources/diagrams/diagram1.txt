@@ -1,0 +1,15 @@
+title Obtain Token
+actor Client
+Client --> Web Security Config: POST /login
+note right of Client: Username String
+note right of Client: Password String
+opt Validations
+    Web Security Config --> Web Security Config: Validate Combination
+end
+alt Failed
+    Web Security Config --> Client: Return 401
+    Web Security Config --> Client: Return Unauthorized message
+else Success
+    Web Security Config --> Client: Return 200
+    Web Security Config --> Client: Return OK message
+end

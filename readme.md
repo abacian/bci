@@ -8,8 +8,9 @@
 5. JWT
 6. Swagger (Open API)
 7. Unit Testing (Postman collection)
-8. GitHub public repository
+8. [GitHub public repository](https://github.com/abacian/bci)
 9. Readme.md
+10. Diagrams of the solution
 
 ## B. Functional Goals
 1. Accept and return JSON only
@@ -35,10 +36,12 @@
 2. [Swagger portal](http://localhost:8080/swagger)
 3. [Open API declaration](http://localhost:8080/api)
 4. [H2 console](http://localhost:8080/h2) admin@admin
+5. [Documentation](https://github.com/abacian/bci)
 
 # III. Execute test
 
 ## A. Obtain Token
+![](./src/main/resources/diagrams/diagram1.png)
 * Goal: obtain a valid JWT Token
 * Consider token secret key (spring.security.secret)
 * Consider token vigency in seconds (spring.security.duration)
@@ -46,17 +49,20 @@
 * Obtain the token from header response section: Authorization Bearer
 
 ## B. Create User
+![](./src/main/resources/diagrams/diagram2.png)
 * Goal: create a user and phone structure according guideline specification
 * Put the rescued token into Authorization section and select Bearer Token
 * Consider a valid email
 * Consider a strong password according to the regular expression defined (password.expression.regexp)
 
 ## C. Obtain User
+![](./src/main/resources/diagrams/diagram3.png)
 * Goal: obtain a registered user using email like key
 * Put the rescued token into Authorization section and select Bearer Token
 * Consider a registered email (step B.)
 
 ## D. Disable User
+![](./src/main/resources/diagrams/diagram4.png)
 * Goal: change isValid value alternating about last status
 * Put the rescued token into Authorization section and select Bearer Token
 * Consider a registered email (step B.)

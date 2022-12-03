@@ -1,0 +1,30 @@
+title Obtain User
+actor Client
+Client --> Service Controller: GET /service
+note right of Client: User Structure
+Service Controller --> Service Validation: obtainUser
+opt Validations
+    Service Validation --> Service Validation: Validate Email
+end
+alt Failed
+    Service Validation --> Service Controller: Return 404
+    Service Validation --> Service Controller: Return Bad Request Response message
+    Service Controller --> Client: Return 404
+    Service Controller --> Client: Return Bad Request Response message
+else Success
+    Service Validation --> Service Controller: Return null
+    Service Controller --> Service Controller: Enrich User Structure
+    Service Controller --> Service Persistence: obtainUser
+    opt Persistence
+        Service Persistence --> Service Persistence: Find User
+    end
+    alt Failed
+        Service Persistence --> Service Controller: Return 500
+        Service Persistence --> Service Controller: Return Internal Error message
+    else Success
+        Service Persistence --> Service Controller: Return 200
+        Service Persistence --> Service Controller: Return Success message
+    end
+    Service Controller --> Client: Return Code
+    Service Controller --> Client: Return Message
+end
