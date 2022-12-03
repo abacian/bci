@@ -32,10 +32,10 @@ extends LoggerUtility {
 
             var jsonNode = JsonUtility.getJsonNode (responseDto);
 
-            jsonNode = JsonUtility.removeElement (jsonNode, "email");
-            jsonNode = JsonUtility.removeElement (jsonNode, "name");
-            jsonNode = JsonUtility.removeElement (jsonNode, "password");
-            jsonNode = JsonUtility.removeElement (jsonNode, "phones");
+            JsonUtility.removeElement (jsonNode, "email");
+            JsonUtility.removeElement (jsonNode, "name");
+            JsonUtility.removeElement (jsonNode, "password");
+            JsonUtility.removeElement (jsonNode, "phones");
 
             return returnerUtility.getSuccessResponse (jsonNode);
 
@@ -69,8 +69,8 @@ extends LoggerUtility {
 
             var jsonNode = JsonUtility.getJsonNode (responseDto);
 
-            jsonNode = JsonUtility.removeElement (jsonNode, "id");
-            jsonNode = JsonUtility.removeElement (jsonNode, "token");
+            JsonUtility.removeElement (jsonNode, "id");
+            JsonUtility.removeElement (jsonNode, "token");
 
             return returnerUtility.getSuccessResponse (jsonNode);
 
@@ -113,10 +113,10 @@ extends LoggerUtility {
 
             var jsonNode = JsonUtility.getJsonNode (responseDto);
 
-            jsonNode = JsonUtility.removeElement (jsonNode, "email");
-            jsonNode = JsonUtility.removeElement (jsonNode, "name");
-            jsonNode = JsonUtility.removeElement (jsonNode, "password");
-            jsonNode = JsonUtility.removeElement (jsonNode, "phones");
+            JsonUtility.removeElement (jsonNode, "email");
+            JsonUtility.removeElement (jsonNode, "name");
+            JsonUtility.removeElement (jsonNode, "password");
+            JsonUtility.removeElement (jsonNode, "phones");
 
             return returnerUtility.getSuccessResponse (jsonNode);
 

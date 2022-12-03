@@ -3,7 +3,6 @@ package cl.bci.exercise;
 import cl.bci.exercise.entities.AdminEntity;
 import cl.bci.exercise.repositories.AdminRepository;
 import cl.bci.exercise.utilities.LoggerUtility;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -32,7 +31,7 @@ implements ApplicationRunner {
 
         adminEntity.setEmail ("abacian@gmail.com");
         adminEntity.setUsername ("Alexis Bacian");
-        adminEntity.setPassword ("$2a$10$9LgswefjwIoBov9sPl.mjuWudsi9jtafKWbtIsA2dip7kZQLfEYr6");
+        adminEntity.setPassword ("$2a$10$1jlJRoe.ZG0V4YJzE9bGG.JFYt3fQT8H0JUPmwk71UMyhiYDEQ5rm");
 
         adminRepository.save (adminEntity);
 
@@ -40,7 +39,7 @@ implements ApplicationRunner {
 
         adminEntity.setEmail ("reinaldo.horie@bci.cl");
         adminEntity.setUsername ("Reinaldo Horie");
-        adminEntity.setPassword ("$2a$10$9LgswefjwIoBov9sPl.mjuWudsi9jtafKWbtIsA2dip7kZQLfEYr6");
+        adminEntity.setPassword ("$2a$10$1jlJRoe.ZG0V4YJzE9bGG.JFYt3fQT8H0JUPmwk71UMyhiYDEQ5rm");
 
         adminRepository.save (adminEntity);
 
@@ -51,6 +50,6 @@ implements ApplicationRunner {
 
         this.adminRepository = adminRepository;
 
-
     }
+
 }

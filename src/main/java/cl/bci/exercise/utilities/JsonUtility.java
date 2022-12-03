@@ -32,13 +32,11 @@ public class JsonUtility {
 
     }
 
-    public static JsonNode removeElement (JsonNode jsonNode, String element) {
+    public static void removeElement (JsonNode jsonNode, String element) {
 
         val objectNode = (ObjectNode) jsonNode;
 
         objectNode.remove (element);
-
-        return objectNode;
 
     }
 

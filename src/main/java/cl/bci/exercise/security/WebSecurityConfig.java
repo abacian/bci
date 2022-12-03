@@ -32,7 +32,7 @@ public class WebSecurityConfig {
 
         httpSecurity.authorizeRequests ().antMatchers ("/").permitAll ();
         httpSecurity.authorizeRequests ().antMatchers ("/h2/**", "/h2-console/**").permitAll ();
-        httpSecurity.authorizeRequests ().antMatchers ("/swagger/**", "/swagger-ui/**", "/api-docs/**").permitAll ();
+        httpSecurity.authorizeRequests ().antMatchers ("/swagger/**", "/swagger-ui/**", "/api/**").permitAll ();
         httpSecurity.csrf ().disable ().authorizeRequests ().anyRequest ().authenticated ();
         httpSecurity.httpBasic ();
         httpSecurity.sessionManagement ().sessionCreationPolicy (SessionCreationPolicy.STATELESS);
@@ -59,6 +59,12 @@ public class WebSecurityConfig {
     PasswordEncoder passwordEncoder () {
 
         return new BCryptPasswordEncoder ();
+
+    }
+
+    public static void main (String... strings) {
+
+        System.out.println (new BCryptPasswordEncoder ().encode ("hola"));
 
     }
 
